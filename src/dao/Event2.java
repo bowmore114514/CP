@@ -112,6 +112,199 @@ public class Event2 {
 	public void setEventPageFileName(String eventPageFileName) {
 		this.eventPageFileName = eventPageFileName;
 	}
+	public  static int getYear(Calendar cal){
+		return cal.get(Calendar.YEAR);
+	}
 
+	public  static int getMonth(Calendar cal){
+		return cal.get(Calendar.MONTH);
+	}
+
+	public  static int getDate(Calendar cal){
+		return cal.get(Calendar.DATE);
+	}
+
+	public  static int getHour(Calendar cal){
+		return cal.get(Calendar.HOUR);
+	}
+
+	public  static int getMinute(Calendar cal){
+		return cal.get(Calendar.MINUTE);
+	}
+
+	public  static int getSecond(Calendar cal){
+		return cal.get(Calendar.SECOND);
+	}
+
+	public  static void setYear(Calendar cal,int n){
+		if(n>0) cal.set(Calendar.YEAR, n);
+		else cal.set(Calendar.YEAR, Calendar.YEAR);
+	}
+
+	public  static void setMonth(Calendar cal,int n){
+		if(n>=0) cal.set(Calendar.MONTH, n);
+		else cal.set(Calendar.MONTH, Calendar.MONTH );
+	}
+
+	public  static void setDate(Calendar cal,int n){
+		if(n>0) cal.set(Calendar.DATE, n);
+		else cal.set(Calendar.DATE, Calendar.DATE);
+	}
+
+	public  static void setHour(Calendar cal,int n){
+		if(n>0) cal.set(Calendar.HOUR, n);
+		else cal.set(Calendar.HOUR, Calendar.HOUR);
+	}
+
+	public  static void setMinute(Calendar cal,int n){
+		if(n>0) cal.set(Calendar.MINUTE, n);
+		else cal.set(Calendar.MINUTE, Calendar.MINUTE);
+	}
+
+	public  static void setSecond(Calendar cal,int n){
+		if(n>0) cal.set(Calendar.SECOND, n);
+		else cal.set(Calendar.SECOND, Calendar.SECOND);
+	}
+
+	public void setDeterminedDay(int year,int month,int date,int hour, int minute ,int second ) {
+		setYear(this.determinedDay ,year);
+		setMonth(this.determinedDay ,month);
+		setDate(this.determinedDay ,date);
+		setHour(this.determinedDay ,hour);
+		setMinute(this.determinedDay ,minute);
+		setSecond(this.determinedDay ,second);
+	}
+
+	public int getDeterminedYear(){
+		return getYear(registDay);
+	}
+	public int getDeterminedMonth(){
+		return getMonth(registDay);
+	}
+	public int getDeterminedDate(){
+		return getDate(registDay);
+	}
+	public int getDeterminedHour(){
+		return getHour(registDay);
+	}
+	public int getDeterminedMinute(){
+		return getMinute(registDay);
+	}
+	public int getDeterminedSecond(){
+		return getSecond(registDay);
+	}
+
+	public void setDeterminedYear(int year){
+		setYear(this.registDay ,year);
+	}
+	public void setDeterminedMonth(int month){
+		setMonth(this.registDay ,month);
+	}
+	public void setDeterminedDate(int date){
+		setDate(this.registDay ,date);
+	}
+	public void setDeterminedHour(int hour){
+		setHour(this.registDay ,hour);
+	}
+	public void setDeterminedMinute(int minute){
+		setMinute(this.registDay ,minute);
+	}
+	public void setDeterminedSeconde(int second){
+		setSecond(this.registDay ,second);
+	}
+
+	public void setDeadlineDay(int year,int month,int date,int hour, int minute ,int second ) {
+		setYear(this.deadlineDay ,year);
+		setMonth(this.deadlineDay ,month);
+		setDate(this.deadlineDay ,date);
+		setHour(this.deadlineDay ,hour);
+		setMinute(this.deadlineDay ,minute);
+		setSecond(this.deadlineDay ,second);
+	}
+
+	public int getDeadlineYear(){
+		return getYear(deadlineDay);
+	}
+	public int getDeadlineMonth(){
+		return getMonth(deadlineDay);
+	}
+	public int getDeadlineDate(){
+		return getDate(deadlineDay);
+	}
+	public int getDeadlineHour(){
+		return getHour(deadlineDay);
+	}
+	public int getDeadlineMinute(){
+		return getMinute(deadlineDay);
+	}
+	public int getDeadlineSecond(){
+		return getSecond(deadlineDay);
+	}
+
+	public void setDeadlineYear(int year){
+		setYear(this.deadlineDay ,year);
+	}
+	public void setDeadlineMonth(int month){
+		setMonth(this.deadlineDay ,month);
+	}
+	public void setDeadlineDate(int date){
+		setDate(this.deadlineDay ,date);
+	}
+	public void setDeadlineHour(int hour){
+		setHour(this.deadlineDay ,hour);
+	}
+	public void setDeadlineMinute(int minute){
+		setMinute(this.deadlineDay ,minute);
+	}
+	public void setDeadlineSeconde(int second){
+		setSecond(this.deadlineDay ,second);
+	}
+
+	public void setRegistDay(int year,int month,int date,int hour, int minute ,int second ) {
+		setYear(this.registDay ,year);
+		setMonth(this.registDay ,month);
+		setDate(this.registDay ,date);
+		setHour(this.registDay ,hour);
+		setMinute(this.registDay ,minute);
+		setSecond(this.registDay ,second);
+	}
+
+	public int getRegistYear(){
+		return getYear(registDay);
+	}
+	public int getRegistMonth(){
+		return getMonth(registDay);
+	}
+	public int getRegistDate(){
+		return getDate(registDay);
+	}
+	public int getRegistHour(){
+		return getHour(registDay);
+	}
+	public int getRegistMinute(){
+		return getMinute(registDay);
+	}
+	public int getRegistSecond(){
+		return getSecond(registDay);
+	}
+
+	public void setRegistYear(int year){
+		setYear(this.registDay ,year);
+	}
+	public void setRegistMonth(int month){
+		setMonth(this.registDay ,month);
+	}
+	public void setRegistDate(int date){
+		setDate(this.registDay ,date);
+	}
+	public void setRegistHour(int hour){
+		setHour(this.registDay ,hour);
+	}
+	public void setRegistMinute(int minute){
+		setMinute(this.registDay ,minute);
+	}
+	public void setRegistSeconde(int second){
+		setSecond(this.registDay ,second);
+	}
 
 }

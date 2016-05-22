@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="model.Event,java.util.List" %>
+<%@ page import="dao.Event2" %>
 <%@ page import="java.util.ArrayList" %>
 <%
 ArrayList<Event> eventList = (ArrayList<Event>) session.getAttribute("eventList");
