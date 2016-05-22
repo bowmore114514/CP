@@ -22,7 +22,7 @@ ArrayList<Event> eventList = (ArrayList<Event>) session.getAttribute("eventList"
 		<th>投稿日時</th>
 		<th>幹事者名</th>
 		<th>締め切り</th>
-		<th>備考</th>
+<!-- 		<th>備考</th> -->
 		<th>URL</th>
 	</tr>
 	<%
@@ -39,9 +39,9 @@ ArrayList<Event> eventList = (ArrayList<Event>) session.getAttribute("eventList"
 	<tr>
 		<td><%=event.getDeadlineYear() %>年<%=event.getDeadlineMonth() %>月<%=event.getDeadlineDate() %>日<%=event.getDeadlineHour() %>時<%=event.getDeadlineMinute() %>分</td></td>
 	</tr>
-	<tr>
+<%-- 	<tr>
 		<td><%=event.getAutherRemark() %></td>
-	</tr>
+	</tr> --%>
 	<tr>
 		<td><%=event.getEventUrl() %></td>
 	</tr>
@@ -55,7 +55,7 @@ ArrayList<Event> eventList = (ArrayList<Event>) session.getAttribute("eventList"
 		<th>投稿日時</th>
 		<th>幹事者名</th>
 		<th>締め切り</th>
-		<th>備考</th>
+		<!-- <th>備考</th> -->
 		<th>URL</th>
 	</tr>
 	<%
@@ -72,9 +72,9 @@ ArrayList<Event> eventList = (ArrayList<Event>) session.getAttribute("eventList"
 	<tr>
 		<td><%=event.getDeadlineYear() %>年<%=event.getDeadlineMonth() %>月<%=event.getDeadlineDate() %>日<%=event.getDeadlineHour() %>時<%=event.getDeadlineMinute() %>分</td></td>
 	</tr>
-	<tr>
+	<%-- <tr>
 		<td><%=event.getAutherRemark() %></td>
-	</tr>
+	</tr> --%>
 	<tr>
 		<td><%=event.getEventUrl() %></td>
 	</tr>

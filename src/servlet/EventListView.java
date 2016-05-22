@@ -40,8 +40,11 @@ public class EventListView extends HttpServlet {
 
 	EventDAO dao = new EventDAO();
 	ArrayList<Event> eventList = new ArrayList<Event>();
-	ArrayList<Event2> eventList2 = dao.getEvent2List();
-	for(Event = )
+	ArrayList<Event2> eventList2 =dao.getEvent2List();
+
+
+
+
 
 	//フォワード
 	RequestDispatcher dispatcher
@@ -49,6 +52,6 @@ public class EventListView extends HttpServlet {
 	dispatcher.forward(request,response);
 
 	//リクエストスコープに保存
-	request.setAttribute("eventList",eventList);
+	request.setAttribute("eventList",eventList2);
 	}
 }
