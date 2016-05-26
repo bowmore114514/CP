@@ -158,7 +158,7 @@ public class MasterUserEditServlet extends HttpServlet {
 
 			// DAO（変更用）
 			// Event Table
-			dao.updateBordItemList2(eventId, intItemId, userName, userPass, userRemark, userRegistDay, bordItems2);
+			dao.updateBordItemList2(bordItems2);
 
 			// preferredFlagSet Table
 			for (BordItems2 item : b2) {

@@ -88,7 +88,7 @@ public class MasterEditServlet extends HttpServlet {
 			}
 		}
 
-
+		int noe=0;
 		// 費用 - リクエストパラメータ
 		ArrayList<String> pricePerPersonA = new ArrayList<String>();
 		for (int i = 0; i < 5; i++) {
@@ -98,9 +98,10 @@ public class MasterEditServlet extends HttpServlet {
 				break;
 			} else {
 				pricePerPersonA.add(pricePerPersonS);
+				noe++;
 			}
 		}
-		numberOfEvent =  "2";//String.valueOf(pricePerPersonA.size());
+		numberOfEvent =  String.valueOf(noe);//String.valueOf(pricePerPersonA.size());
 
 		/*//年月日時間
 		ArrayList<String> yearS = new ArrayList<String>();
@@ -198,7 +199,7 @@ public class MasterEditServlet extends HttpServlet {
 		//DAO
 		EventDAO dao = new EventDAO();
 
-		
+
 
 		Event2 event2 = new Event2(eventId, eventName, organizarName, registDay, autherName,
 				autherPass, deadlineDay, determinedDay, determinedFlag, eventOpenFlag,
@@ -206,7 +207,7 @@ public class MasterEditServlet extends HttpServlet {
 		Event2 eventtemp = new Event2(eventId, eventName, organizarName, registDay, autherName,
 				autherPass, deadlineDay, determinedDay, determinedFlag, eventOpenFlag,
 				numberOfEvent, eventUrl, eventPageFileName);
-		
+
 		ArrayList<Event2> eventList = dao.getEvent2List();
 		for(Event2 event3 :eventList){
 			if(event3.getEventId().equals(eventId)){
@@ -215,7 +216,7 @@ public class MasterEditServlet extends HttpServlet {
 		}
 		event2.setAutherPass(eventtemp.getAutherPass());
 		event2.setEventPageFileName("NoDATE");
-		
+
 
 		//eventId String → int
 		int intEventId = Integer.parseInt(eventId);

@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="model.Event, dao.BordItems2, java.util.ArrayList" %>
@@ -10,9 +9,11 @@ ArrayList<ArrayList<Integer>> pFlagSet = (ArrayList<ArrayList<Integer>>) session
 <!DOCTYPE html >
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <meta charset="UTF-8">
 <title>イベント内容の確認</title>
 <STYLE type="text/css">
+<link rel="stylesheet" type="text/css" href="style.css" />
 td.Reaper1 { overflow: scroll;  }
 </STYLE>
 <script language=javascript>
@@ -30,7 +31,8 @@ td.Reaper1 { overflow: scroll;  }
 <body>
 <h1>タイトル画像</h1>
 <h2>イベント内容の確認</h2>
-<form action="/Carolina/EventReEditing"  method="post">
+<form action="/CarolinaReaper/EventReEditing"  method="post">
+<input type="hidden" name ="pageid" value="<%=redpepper.getEventId() %>">
 <table border="5" frame="hsides">
 	<tr>
 		<th>イベント名：</th>
@@ -82,7 +84,7 @@ td.Reaper1 { overflow: scroll;  }
 		</td>
 	</tr>
 		<% } %>
-
+</table>
 <h2>参加者一覧</h2>
 
 <table border="5" frame="hsides">
@@ -106,19 +108,17 @@ td.Reaper1 { overflow: scroll;  }
 		<% } %>
 	</tr>
 </table>
+編集を終了する:<input type="radio"  name="action" value="0">
+<br>
+イベントの削除:<input type="radio"  name="action" value="1">
+<br>
+イベントの確定:<input type="radio"  name="action" value="2">
+<br>
+<input type="submit" value="決定">
+<p><a href="index.jsp" >HOME</a></p>
 
-<input type="submit"  value="編集を終了する"></form>
-
-<form action="/Carolina/EventReEditing"  method="post">
-<input type="submit"  name="delete" value="イベントの削除">
-
-<form action="/Carolina/EventReEditing"  method="post">
-<input type="submit"  name="null" value="イベントの確定">
+</form>
 
 
-<p><a href="EventConfirmation.java">HOME</a>
-
-
-</table>
 </body>
 </html>

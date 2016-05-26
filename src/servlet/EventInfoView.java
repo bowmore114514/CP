@@ -1,4 +1,3 @@
-
 package servlet;
 
 import java.io.IOException;
@@ -13,54 +12,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.BordItems2;
 import dao.Event2;
 import dao.EventDAO;
 import model.Event;
 
-
 /**
- * Servlet implementation class EventPage
+ * Servlet implementation class EventInfoView
  */
-@WebServlet("/EventPage")
-public class EventPage extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+@WebServlet("/EventInfoView")
+public class EventInfoView extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EventPage() {
+    public EventInfoView() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 
-
-
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.setCharacterEncoding("UTF-8");
-    	response.setContentType("text/html; charset=UTF-8");
-        // TODO Auto-generated method stub
-        response.getWriter().append("Served at: ").append(request.getContextPath());
-
-/*        //URLの取得
-        String url = new String(request.getRequestURL());
-        String eventIdS = rightstring(url,5);
-        int eventId = Integer.parseInt(eventIdS);*/
-
-
-        //リクエストパラメータでpageIdを取得 (pageId=eventId)
-        String eventIdS = Event.getIdFromURL(request.getParameter("pageid"));
-
+		//リクエストパラメータでpageIdを取得
+		String eventIdS = Event.getIdFromURL(request.getParameter("pageid"));
 
         //String から int に直す
         int eventId = Integer.parseInt(eventIdS);
 
-
-        //Event2インスタンス
+      //Event2インスタンス
         //適当な初期値
         String str = "str";
         int Int = 0;
@@ -69,21 +53,20 @@ public class EventPage extends HttpServlet {
         Event2 event0 = new Event2(str, str, str, cal, str,
                                     str, cal, cal, Int, Int, str, str, str);
 
-        //DAO
-        EventDAO dao = new EventDAO();
-
-        ArrayList<Event2> event2 = dao.getEvent2List();
+		//DAO
+		EventDAO dao = new EventDAO();
+		ArrayList<Event2> event2 = dao.getEvent2List();
 
         for (Event2 event:event2){
-            if (Integer.parseInt(event.getEventId()) == Integer.parseInt(eventIdS)){
+            if (Integer.parseInt(event.getEventId()) == eventId){
 
-                event0 = event;
+                event0 =event;
                 break;
 
             }
         }
 
-        //event0からそれぞれの値を取得
+      //event0からそれぞれの値を取得
         String eventName = event0.getEventName();
         String organizarName = event0.getOrganizarName();
         Calendar registDay = event0.getRegistDay();
@@ -122,52 +105,9 @@ public class EventPage extends HttpServlet {
         session.setAttribute("event",event);
         //request.setAttribute("event", "event");
 
-
-
-        //BordItems2
-        ArrayList<BordItems2> bordItems2 = dao.getBordItemList(eventId);
-        ArrayList<ArrayList<Integer>> preferredFlagSet = new ArrayList<ArrayList<Integer>>();
-
-        if(bordItems2 == null || bordItems2.size() == 0){
-
-        	session.setAttribute("bordItems2", bordItems2);
-
-        }else{
-            for (BordItems2 item : bordItems2){
-                preferredFlagSet.add(dao.getPreferredFlagSet(eventId,item.getItemId()));
-            }
-
-
-            //セッションスコープに保存
-            session.setAttribute("bordItems2", bordItems2);
-            session.setAttribute("preferredFlagSet", preferredFlagSet);
-
-            request.setAttribute("bordItems2", bordItems2);
-            request.setAttribute("preferredFlagSet", "preferredFlagSet");
-        }
-
-
-
-        //フォワード
-        //RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/participant.jsp");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/eventEdit.jsp");
+      //フォワード
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/infomation.jsp");
         dispatcher.forward(request, response);
-        return;
+	}
 
-    }
 }
-
-
-
-
-   /* public static String rightstring(String value, int length){
-        try{
-            if(value.length() >= length){
-                return value.substring(value.length() - length);
-            }else{
-                return  value.substring(1);
-            }
-        }catch(Exception e){
-            return value;
-        }
-    }*/

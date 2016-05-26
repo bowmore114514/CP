@@ -1,4 +1,3 @@
-
 package servlet;
 
 import java.io.IOException;
@@ -18,29 +17,25 @@ import dao.Event2;
 import dao.EventDAO;
 import model.Event;
 
-
 /**
- * Servlet implementation class EventPage
+ * Servlet implementation class EventPartView
  */
-@WebServlet("/EventPage")
-public class EventPage extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+@WebServlet("/EventPartView")
+public class EventPartView extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EventPage() {
+    public EventPartView() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-
-
-
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html; charset=UTF-8");
         // TODO Auto-generated method stub
@@ -149,25 +144,10 @@ public class EventPage extends HttpServlet {
 
 
         //フォワード
-        //RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/participant.jsp");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/eventEdit.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/participant.jsp");
         dispatcher.forward(request, response);
-        return;
 
     }
+
+
 }
-
-
-
-
-   /* public static String rightstring(String value, int length){
-        try{
-            if(value.length() >= length){
-                return value.substring(value.length() - length);
-            }else{
-                return  value.substring(1);
-            }
-        }catch(Exception e){
-            return value;
-        }
-    }*/

@@ -876,7 +876,7 @@ public class EventDAO {
 
 
 			//INSERT文準備
-			pStmt = conn.prepareStatement(insertBordItems(item2.getItemId()));
+			pStmt = conn.prepareStatement(insertBordItems(item2.getEventId()));
 			//----------SQL文実行----------
 			pStmt.setInt(1, item2.getEventId());
 			//pStmt.setInt(1,item2.getItemId());
@@ -886,14 +886,26 @@ public class EventDAO {
 				pStmt.setString(5, getStrByCalendar(item2.getUserRegistDay()));
 				result *= pStmt.executeUpdate();
 				//--------------ID返却用
-				String s = "SELECT MAX(ITEMID)  FROM borditems"+String.valueOf(item2.getEventId());
+				String s = "SELECT ITEMID  FROM borditems"+String.valueOf(item2.getEventId());
 
 
-				//SELECT文準備
+/*				//SELECT文準備
 				pStmt = conn.prepareStatement(s);
 				//----------SQL文実行----------
 				resultSet = pStmt.executeQuery();
-				id = resultSet.getInt("ITEMID");
+				id = resultSet.getInt("ITEMID");*/
+				pStmt = conn.prepareStatement(s);
+				//----------SQL文実行----------
+				int n=0;
+				 resultSet = pStmt.executeQuery();
+				while(resultSet.next()){
+					id = resultSet.getInt("ITEMID");
+					if(n>=id){
+						id=n;
+					}else{
+						n=id;
+					}
+					}
 
 
 
@@ -1303,8 +1315,7 @@ public class EventDAO {
 
 
 
-	public  boolean updateBordItemList2(int eid,int itemId, String userName,
-			String userPass, String userRemark,Calendar userRegistDay,BordItems2 item2){   //indexにeventIDを入力すると、そのeventIDのAutherRemarkを返す
+	public  boolean updateBordItemList2(BordItems2 item2){   //indexにeventIDを入力すると、そのeventIDのAutherRemarkを返す
 
 		Connection conn = null;
 		PreparedStatement  pStmt = null; // SQL文オブジェクト
@@ -1319,9 +1330,9 @@ public class EventDAO {
 
 
 			//UPDATE文準備
-			pStmt = conn.prepareStatement(updateBordItems(itemId));
+			pStmt = conn.prepareStatement(updateBordItems(item2.getEventId()));
 			//----------SQL文実行----------
-				pStmt.setInt(5, item2.getItemId());
+				pStmt.setInt(5, item2.getEventId());
 				pStmt.setInt(6,item2.getItemId());
 				pStmt.setString(1, item2.getUserName());
 				pStmt.setString(2, item2.getUserPass());

@@ -58,7 +58,6 @@ public class EventReEditing extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		String action = request.getParameter("action"); // 判別用
-
 		String eventName = request.getParameter("eventName"); // イベント名
 		String organizarName = request.getParameter("organizarName"); // 幹事の名前
 		// String[] eventVenueA = request.getParameterValues("eventVenue"); //
@@ -74,22 +73,23 @@ public class EventReEditing extends HttpServlet {
 		String deadlineDayMonthS = request.getParameter("deadlineDayMonth"); // 締切日
 		String deadlineDateS = request.getParameter("deadlineDay"); // 締切日 日
 
-		String pageid = request.getParameter("pageid");
+		String eventId = request.getParameter("pageid");
 
 		// String[] yearS = request.getParameterValues("year"); // 年 日程候補日
 		// String[] monthS = request.getParameterValues("month"); // 月 日程候補日
 		// String[] dateS = request.getParameterValues("day"); // 日 日程候補日
 		// String[] hourS = request.getParameterValues("hour"); // 時間
-
+		int noe=0;
 		// 場所 - リクエストパラメータ
 		ArrayList<String> eventVenue = new ArrayList<String>(); //ArrayList
 		for (int i = 0; i < 5; i++) {
 			String eventVenueS = request.getParameter("eventVenue" + i);
 
-			if (eventVenueS == null) {
+			if (eventVenueS == null || eventVenueS.length() ==0) {
 				break;
 			} else {
 				eventVenue.add(eventVenueS);
+				noe++;
 			}
 		}
 
@@ -99,7 +99,7 @@ public class EventReEditing extends HttpServlet {
 		for (int i = 0; i < 5; i++) {
 			String autherRemarkS = request.getParameter("autherRemark" + i);
 
-			if (autherRemarkS == null) {
+			if (autherRemarkS == null || autherRemarkS.length()==0) {
 				break;
 			} else {
 				autherRemark.add(autherRemarkS);
@@ -112,7 +112,7 @@ public class EventReEditing extends HttpServlet {
 		for (int i = 0; i < 5; i++) {
 			String pricePerPersonS = request.getParameter("pricePerPerson" + i);
 
-			if (pricePerPersonS == null) {
+			if (pricePerPersonS == null || pricePerPersonS.length()==0) {
 				break;
 			} else {
 				pricePerPersonA.add(pricePerPersonS);
@@ -203,10 +203,10 @@ public class EventReEditing extends HttpServlet {
 		// DAO
 		EventDAO dao = new EventDAO();
 
-		String eventId = eventE.getEventId();
+		 eventId = eventE.getEventId();
 
 		Event2 event2 = new Event2(eventId, eventName, organizarName, registDay, autherName, autherPass, deadlineDay,
-				determinedDay, determinedFlag, eventOpenFlag, numberOfEvent, eventUrl, eventPageFileName);
+				determinedDay, determinedFlag, eventOpenFlag, String.valueOf(noe), eventUrl, eventPageFileName);
 
 		// eventId String → int
 		int intEventId = Integer.parseInt(eventId);
@@ -219,7 +219,7 @@ public class EventReEditing extends HttpServlet {
 		}
 
 
-		if (action == null) { // 決定が選択された
+		if (action == "0") { // 決定が選択された
 
 			// DAO（変更用）
 
@@ -243,7 +243,7 @@ public class EventReEditing extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/str/servlet/EventPage?pageid="+ intEventId +".java");
 			dispatcher.forward(request, response);
 
-		} else if (action.equals("delete")) { // 削除が選択された
+		} else if (action.equals("1")) { // 削除が選択された
 
 			// DAO(削除用)
 
@@ -262,7 +262,13 @@ public class EventReEditing extends HttpServlet {
 			}
 
 			// イベント一覧ページにフォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/str/servlet/EventListView.java");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/CarolinaReaper/EventListView");
+			dispatcher.forward(request, response);
+		}
+		else if(action.equals("2")){
+			event2.setDeterminedFlag(1);
+			dao.updateEvent2List(event2);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/CarolinaReaper/EventListView");
 			dispatcher.forward(request, response);
 		}
 	}

@@ -373,7 +373,7 @@ public class Event  {
 	}
 
 	public  static int getHour(Calendar cal){
-		return cal.get(Calendar.HOUR);
+		return cal.get(Calendar.HOUR_OF_DAY);
 	}
 
 	public  static int getMinute(Calendar cal){
@@ -400,8 +400,8 @@ public class Event  {
 	}
 
 	public  static void setHour(Calendar cal,int n){
-		if(n>0) cal.set(Calendar.HOUR, n);
-		else cal.set(Calendar.HOUR, Calendar.HOUR);
+		if(n>0) cal.set(Calendar.HOUR_OF_DAY, n);
+		else cal.set(Calendar.HOUR_OF_DAY, Calendar.HOUR_OF_DAY);
 	}
 
 	public  static void setMinute(Calendar cal,int n){

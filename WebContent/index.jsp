@@ -13,10 +13,18 @@ td.Reaper2 { width: 400px; height: 40px;  background-color:transparent;}
 td.Reaper3 { width: 400px; height: 40px; overflow: scroll; background-color:transparent;  }
 -->
 </STYLE>
-</head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 
+
+<!--
+th.Reaper1 { width: 120px; height: 40px;  background-color:transparent;}
+td.Reaper2 { width: 400px; height: 40px;  background-color:transparent;}
+td.Reaper3 { width: 400px; height: 40px; overflow: scroll; background-color:transparent;  }
+-->
+</STYLE>
 <div style="text-align : center">
-<body background="C:\Users\taiko\Desktop/14942842_M.jpg" bgproperties="fixed" text="#fafafa" background-size="contain">
+</head>
+<body>
  <h1></h1>
 <h2>タイトル</h>
 <p><a href="/CarolinaReaper/EventListView">イベント一覧へ</a>

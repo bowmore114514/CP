@@ -51,6 +51,7 @@ public class EventListView extends HttpServlet {
 	RequestDispatcher dispatcher
 	= request.getRequestDispatcher("/WEB-INF/eventlist.jsp");
 	dispatcher.forward(request,response);
+	return;
 
 
 	}

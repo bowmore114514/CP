@@ -7,6 +7,7 @@ Event redpepper = (Event) session.getAttribute("event");
 <!DOCTYPE html >
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <div style="text-align : center">
 <meta charset="UTF-8">
 <title>イベント内容の確認</title>

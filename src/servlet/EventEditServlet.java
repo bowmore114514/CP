@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.BordItems2;
+import dao.Event2;
 import dao.EventDAO;
 import model.BordItems;
 import model.Event;
@@ -47,103 +48,146 @@ public class EventEditServlet extends HttpServlet {
 
 		//リクエストパラメータから取得
 		request.setCharacterEncoding("UTF-8");
-		String action = request.getParameter("action");
+		//String edit = request.getParameter("edit");
+		//String decide = request.getParameter("decide");
+		int action = Integer.parseInt( request.getParameter("action"));
+		EventDAO dao = new EventDAO();
 
 
-		if (action.equals("edit")){ //一般投稿者が編集ボタン押したとき
+		//適当な初期値
+		String str = "a";
+		Calendar cal = Calendar.getInstance();
+
+		String userName ="a";
+		String userPass = "b";
+		String eventId = "c";
+		String userRemark = "d";
+		//投稿ID
+		String itemIdS = "123";
+		//投稿日時
+		Calendar  userRegistDay = Calendar.getInstance();
+
+
+		if (action == 1){ //一般投稿者が編集ボタン押したとき
 
 			//リクエストパラメータの取得（一般投稿者用パス）
 			request.setCharacterEncoding("UTF-8");
 			String userPassCheck = request.getParameter("userPass");
-			String itemIdS = request.getParameter("itemId");
+			itemIdS = request.getParameter("itemid");
+			eventId = request.getParameter("eventid");
+			ArrayList<BordItems2> b2list =dao.getBordItemList(Integer.parseInt(eventId));
 
-			int itemId = Integer.parseInt(itemIdS);
 
-			//セッションスコープから取得
-			HttpSession session = request.getSession();
-			ArrayList<BordItems2> b2 = (ArrayList<BordItems2>) session.getAttribute("bordItems2");
-			ArrayList<ArrayList<Integer>> pFlagSet = (ArrayList<ArrayList<Integer>>) session.getAttribute("preferredFlagSet");
-
-			Event e = (Event) session.getAttribute("event");
-
-			//適当な初期値
-			String userName = "a";
-			String userPass = "a";
-			String userRemark = "a";
-			Calendar userRegistDay = Calendar.getInstance();
-
-			int count = 0;
-
-			for(BordItems2 item : b2){
-				if (itemId == item.getItemId()){
+			for(BordItems2 item : b2list){
+				if (Integer.parseInt(itemIdS) == item.getItemId()){
 					userName = item.getUserName();
 					userPass = item.getUserPass();
 					userRemark = item.getUserRemark();
 					userRegistDay = item.getUserRegistDay();
-
-					count++;
 				}
 			}
 
-			ArrayList<Integer> preferredFlagSet = pFlagSet.get(count);
+			ArrayList<Integer> preferredFlagSet = dao.getPreferredFlagSet(Integer.parseInt(eventId), Integer.parseInt(itemIdS));
 
 
 			//BordItemsインスタンス生成
 			BordItems b1 = new BordItems(itemIdS, preferredFlagSet,
 					userName, userPass, userRemark, userRegistDay);
 
-			//パスワード判定
-			boolean userCheck = b1.isUserPassEquals(userPassCheck);
+			ArrayList<Event2> event2List = dao.getEvent2List();
+			//参加・不参加・未定
 
-			if (userCheck == false) {
+			Event2 e = new Event2(str,str,str,cal,str,str,
+						cal,cal,9500,9501,str,str,str);
+
+			for(Event2 ev :event2List){
+				if(Integer.parseInt(ev.getEventId())== Integer.parseInt(eventId)){
+					 e = ev;
+				}
+			}
+
+			if (! userPass.equals(userPassCheck)) {
 
 				// イベントページにフォワード
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/str/servlet/EventPage?pageid=" +e. getEventId() +".java");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
+				//response.sendRedirect("/WebContent/index.jsp");
+				return;
 
 			} else {
+		        //event0からそれぞれの値を取得
+		        String eventName = e.getEventName();
+		        String organizarName = e.getOrganizarName();
+		        Calendar registDay = e.getRegistDay();
+		        String autherName = e.getAutherName();
+		        String autherPass = e.getAutherPass();
+		        Calendar deadlineDay = e.getDeadlineDay();
+		        Calendar determinedDay = e.getDeterminedDay();
+		        int determinedFlag = e.getDeterminedFlag();
+		        int eventOpenFlag = e.getEventOpenFlag();
+		        String numberOfEvent = e.getNumberOfEvent();
+		        String eventUrl = e.getEventUrl();
+		        String eventPageFileName = e.getEventPageFileName();
 
+		        
+		        //各DBテーブルからeventIdに応じた値をすべて取得
+		        ArrayList<String> eventVenue = dao.getEventVenueList(Integer.parseInt(eventId));
+		        ArrayList<String> autherRemark = dao.getAutherRemarkList(Integer.parseInt(eventId));
+		        ArrayList<String> pricePerPerson = dao.getPricePerPersonList(Integer.parseInt(eventId));
+		        ArrayList<Calendar> candidate = dao.getCandidateList(Integer.parseInt(eventId));
+
+
+		        //インスタンス生成
+		        Event event = new Event(eventName, organizarName, eventVenue,
+		                registDay, autherName, autherPass, deadlineDay,
+		                autherRemark, determinedDay, determinedFlag, eventOpenFlag,
+		                numberOfEvent, eventUrl, eventPageFileName,pricePerPerson,
+		                candidate);
 				//セッションスコープに保存
+				HttpSession session = request.getSession();
 				session.setAttribute("bordItems", b1);
-
+				session.setAttribute("event",event);
 				// 編集ページにフォワード
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/eventEdit2.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/eventUserEdit.jsp");
 				dispatcher.forward(request, response);
+				//response.sendRedirect("/WEB-INF/eventEdit2.jsp");
+				return;
 			}
 
 
-		}else if(action.equals("decide")){ //一般投稿者情報入力
+		}else if( action == 0){ //一般投稿者情報入力
 			//リクエストパラメータの取得
 			request.setCharacterEncoding("UTF-8");
-			String userName = request.getParameter("userName");//一般投稿者名
-			String userPass = request.getParameter("userPass");//一般投稿者パスワード
+			userName = request.getParameter("userName");//一般投稿者名
+			userPass = request.getParameter("userPass");//一般投稿者パスワード
+			eventId = request.getParameter("eventid");
+			userRemark = request.getParameter("userRemark");
 			//String[] preferredFlagS = request.getParameterValues("preferredFlagSet"); //参加・不参加・未定
 
+			ArrayList<Event2> event2List = dao.getEvent2List();
 			//参加・不参加・未定
+
+			Event2 e = new Event2(str,str,str,cal,str,str,
+						cal,cal,9500,9501,str,str,str);
+
+			for(Event2 ev :event2List){
+				if(Integer.parseInt(ev.getEventId())== Integer.parseInt(eventId)){
+					 e = ev;
+				}
+			}
+			ArrayList<Calendar> canList= dao.getCandidateList(Integer.valueOf(eventId));
 			ArrayList<Integer> preferredFlag = new ArrayList<Integer>();
-			for (int i = 0; i < 30; i++){
+			for (int i = 0; i < canList.size(); i++){
 				String preferredFlagS = request.getParameter("preferredFlagSet" + i);
 
-				if(preferredFlagS == null){
+				if(Integer.valueOf(preferredFlagS) ==0){
+					//nullだったら不参加として扱う
 					preferredFlag.add(0);
-					//break;
 				}else{
 					int intpreferredFlagSet = Integer.parseInt(preferredFlagS);
 					preferredFlag.add(intpreferredFlagSet);
 				}
 			}
-
-
-
-			String userRemark = request.getParameter("userRemark");//備考
-
-			//投稿ID
-			String itemIdS = "123";
-
-
-			//投稿日時
-			Calendar  userRegistDay = Calendar.getInstance();
-
 
 			//BordItemsインスタンスの生成
 			BordItems bordItems = new BordItems(itemIdS, preferredFlag,
@@ -151,13 +195,11 @@ public class EventEditServlet extends HttpServlet {
 
 
 
-			//参加・不参加・未定
-			for (int i = 0; i < preferredFlag.size(); i++){
-
+			//参加・不参加・未定 //無限ループなってる
+			/*for (int i = 0; i < preferredFlag.size(); i++){
 				//ArrayListにいれる
 				bordItems.addPreferredFlagSet(preferredFlag.get(i));
-
-			}
+			}*/
 
 
 
@@ -168,36 +210,30 @@ public class EventEditServlet extends HttpServlet {
 			//String → int
 			int intItemId = Integer.parseInt(itemIdS);
 
-			//セッションスコープからイベントIDを取得 //保存時にイベントIDセットすること
-			HttpSession session = request.getSession();
-			Event e = (Event) session.getAttribute("event");
-
-			int eventId = Integer.parseInt(e.getEventId());
-
 			//インスタンス生成
-			BordItems2 bordItems2 = new BordItems2(eventId, intItemId, userName, userPass, userRemark,userRegistDay);
-			EventDAO dao = new EventDAO();
+			BordItems2 bordItems2 = new BordItems2(Integer.parseInt(eventId), intItemId, userName, userPass, userRemark,userRegistDay);
+
 
 
 			//BordItems teable
 			int itemId = dao.insertBordItemList2(bordItems2);
 
 
-
 			//preferredFlagSet Table
-			dao.createPreferredFlagTable(eventId, intItemId);
-			dao.insertPreferredFlagSet(eventId, itemId, bordItems.getPreferredFlagSet());
+			dao.createPreferredFlagTable(Integer.valueOf(eventId), itemId);
+			dao.insertPreferredFlagSet(Integer.valueOf(eventId), itemId, preferredFlag);
 
 			//----------------DAO終了----------------
 
 
-			//セッションスコープに保存
-			session.setAttribute("bordItems",bordItems);
 
 
 			//イベントページにフォワードに変更する
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
+			//response.sendRedirect("/WebContent/index.jsp");
+			return;
+
 		}
 	}
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.BordItems2;
 import dao.Event2;
 import dao.EventDAO;
 import model.CreateAndAnnihilateEventPage;
@@ -64,6 +65,7 @@ public class EventCreation extends HttpServlet {
 		String deadlineDayYearS = request.getParameter("deadlineYear"); // 締切日　年
 		String deadlineDayMonthS = request.getParameter("deadlineDayMonth"); //締切日　
 		String deadlineDateS = request.getParameter("deadlineDay"); //締切日　日
+	//	String deadlineHourS = request.getParameter("deadlineDay"); //締切日　日
 
 		//String[] yearS = request.getParameterValues("year"); // 年 日程候補日
 		//String[] monthS = request.getParameterValues("month"); // 月　日程候補日
@@ -229,7 +231,7 @@ public class EventCreation extends HttpServlet {
 				autherPass, deadlineDay2, determinedDay, determinedFlag, eventOpenFlag,
 				numberOfEvent, eventUrl2, eventPageFileName);
 		EventDAO dao = new EventDAO();
-		dao.createEvent();
+		//dao.createEvent();
 
 
 		//Event Table
@@ -270,6 +272,8 @@ public class EventCreation extends HttpServlet {
 
 		//BordItems
 		dao.createBordItemTable(eventId);
+		BordItems2 item = new BordItems2(2,2,"a","a","a",Calendar.getInstance());
+		dao.insertBordItemList2(item);
 
 		//----------------DAO終了----------------
 

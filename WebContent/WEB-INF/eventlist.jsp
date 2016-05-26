@@ -9,6 +9,7 @@ ArrayList<Event2> eventList = (ArrayList<Event2>) request.getAttribute("eventLis
 <!DOCTYPE html >
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <meta charset=UTF-"8">
 <title>Insert title here</title>
 </head>
